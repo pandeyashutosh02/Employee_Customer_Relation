@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee List</title>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <style>
+        .select2{
+            width: 50%;
+        }
+        .submit_button{
+            margin-left:1rem;
+            margin-top:1rem;
+            width:5rem;
+            padding:0.5rem;
+            border-radius:0.25rem;
+        }
+    </style>
+</head>
+<body>
+    <h1>Select an Employee</h1>
+    <form action="{% url 'api:employee_add' %}" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="company_id" value="{{ com_pk }}">
+        <label for="employee">Choose an Employee:</label>
+        <select id="employee" name="employee" class="select2">
+            <option value='None'>None</option>
+            {% for employee in employees %}
+                <option value="{{ employee.id }}">{{ employee.first_name }} {{ employee.last_name }}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="submit" value="Select" class='submit_button'>
+    </form>
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+        $('.select2').select2();
+        });
+    </script>
+</body>
+</html>
